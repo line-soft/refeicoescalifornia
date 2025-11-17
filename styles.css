@@ -1,0 +1,598 @@
+/* ============================
+   REFEIÇÕES CALIFÓRNIA — TEMA MODERNO PREMIUM
+   TOTALMENTE RESPONSIVO
+   ============================ */
+
+:root{
+  --accent: #2f7a4e;
+  --accent-dark: #1f5f3b;
+  --muted: #6b6b6b;
+  --bg-soft: #f8faf8;
+  --glass: rgba(255,255,255,0.9);
+  --radius: 18px;
+  --shadow: 0 10px 35px rgba(0,0,0,0.08);
+  --shadow-soft: 0 6px 22px rgba(0,0,0,0.05);
+  --btn-radius: 50px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:#fdfdfd;
+  font-family:Montserrat,Arial;
+  color:#2b2b2b;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:40px;
+}
+.app{max-width:1180px;margin:20px auto;padding:12px}
+
+/* ---------------- HEADER ---------------- */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 6px;
+  gap:20px;
+}
+.logo{
+  width:90px;
+  height:90px;
+  border-radius:16px;
+  object-fit:contain;
+  background:#fff;
+  padding:6px;
+  box-shadow:var(--shadow);
+}
+.brand-text h1{
+  font-family:"Playfair Display", serif;
+  font-size:26px;
+  letter-spacing:0.3px;
+  margin:0;
+}
+.brand-text h1 span{
+  color:var(--accent);
+}
+.subtitle{
+  color:var(--muted);
+  font-size:14px;
+  margin-top:5px;
+}
+.header-right{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:6px;
+}
+.promo-pill{
+  padding:6px 12px;
+  font-size:14px;
+  font-weight:700;
+  color:var(--accent-dark);
+  background:linear-gradient(90deg,#e6f6ea,#ffffff);
+  border-radius:14px;
+  border:1px solid rgba(0,0,0,0.05);
+  box-shadow:var(--shadow-soft);
+}
+.whats-link{
+  text-decoration:none;
+  font-weight:700;
+  color:var(--accent);
+}
+
+/* ---------------- HERO ---------------- */
+.hero{
+  margin-top:12px;
+  padding:12px 4px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.hero-left h2{
+  margin:0;
+  font-family:"Playfair Display", serif;
+  font-size:22px;
+}
+.hero-left h2 span{
+  font-size:13px;
+  margin-left:8px;
+  color:var(--muted);
+}
+.hero-left p{
+  margin-top:4px;
+  color:var(--muted);
+}
+.btn{
+  padding:10px 16px;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+/* Ghost */
+.btn-ghost{
+  background:#fff;
+  border:1px dashed rgba(0,0,0,0.15);
+  color:var(--accent);
+}
+/* Ghost Outline */
+.btn-outline{
+  background:#fff;
+  border:1px solid rgba(0,0,0,0.15);
+  color:var(--accent);
+}
+
+/* ---------------- BOTÃO GOURMET PREMIUM ---------------- */
+.btn-gourmet{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:linear-gradient(180deg,var(--accent),var(--accent-dark));
+  color:#fff;
+  font-weight:800;
+  padding:12px 22px;
+  border-radius:var(--btn-radius);
+  border:0;
+  box-shadow:0 10px 28px rgba(47,122,78,0.25);
+  transition:0.2s ease;
+}
+.btn-gourmet:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 38px rgba(47,122,78,0.33);
+}
+.btn-gourmet .icon{
+  width:20px;height:20px;fill:#fff;
+}
+
+/* ---------------- LAYOUT ---------------- */
+.layout{
+  display:grid;
+  grid-template-columns:1fr 380px;
+  gap:24px;
+  margin-top:16px;
+}
+.section-title{
+  font-family:"Playfair Display", serif;
+  margin:10px 0;
+  font-size:20px;
+  color:#2c2c2c;
+}
+
+/* ---------------- CARDS ---------------- */
+.cards{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:20px;
+}
+.card{
+  display:flex;
+  gap:16px;
+  background: var(--glass);
+  padding: 12px;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  align-items: flex-start;
+  transition: transform 0.15s ease;
+}
+.card:hover{
+  transform: translateY(-4px);
+}
+
+/* IMAGEM FIXA */
+.card .img{
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f6fff9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card .img img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Conteúdo ao lado da imagem */
+.card .content{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.card h4{
+  margin:0 0 6px 0;
+  font-size:16px;
+}
+.card p.desc{
+  margin:0 0 10px 0;
+  color: var(--muted);
+  font-size:13px;
+  line-height:1.3;
+}
+
+/* controles */
+.controls{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.sizeSelect,
+.qtyInput{
+  padding:10px;
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,0.08);
+  background:#fff;
+  font-weight:700;
+}
+
+/* ---------------- CARRINHO ---------------- */
+.cart{
+  background:#fff;
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  padding:16px;
+  height:max-content;
+  position:sticky;
+  top:20px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.cart-items{
+  max-height:430px;
+  overflow:auto;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,0.05);
+  background:#f8fff8;
+}
+.mini-thumb{
+  width:60px;
+  height:42px;
+  background:#e8fbea;
+  border-radius:10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:700;
+  color:var(--accent);
+}
+.qty-btn{
+  padding:6px 10px;
+  border-radius:8px;
+  border:1px solid rgba(0,0,0,0.12);
+  background:#fff;
+  font-weight:800;
+  cursor:pointer;
+}
+
+/* Footer */
+.footer{
+  margin-top:26px;
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* ---------- MODAL ---------- */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.3);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  z-index:100;
+}
+.modal.hidden{
+  display:none;
+}
+.modal-card{
+  background:#fff;
+  padding:20px;
+  border-radius:16px;
+  max-width:520px;
+  box-shadow:0 18px 60px rgba(0,0,0,0.2);
+  position:relative;
+}
+
+/* ---------- TOAST ---------- */
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  padding:14px 18px;
+  background:var(--accent);
+  color:#fff;
+  border-radius:12px;
+  box-shadow:0 12px 36px rgba(0,0,0,0.2);
+  font-weight:700;
+}
+.toast.hidden{
+  display:none;
+}
+
+/* ---------------- RESPONSIVO ---------------- */
+@media (max-width:980px){
+  .layout{grid-template-columns:1fr}
+  .header{
+    flex-direction:column;
+    text-align:center;
+  }
+  .header-right{
+    align-items:center;
+  }
+  .cart{
+    position:relative;
+    top:0;
+  }
+}
+
+/* Imagens das bebidas — menores */
+.bebida-img{
+  width:100%;
+  max-width:130px;
+  height:auto;
+  display:block;
+  margin:0 auto;
+  border-radius:12px;
+}
+
+/* Mobile — mantém cards horizontal */
+@media (max-width:600px){
+  .card{
+    flex-direction:row; /* sempre horizontal */
+    align-items:flex-start;
+  }
+  .card .img{
+    width:100px;
+    height:100px;
+  }
+  .card .content{
+    flex:1;
+  }
+  .controls{
+    justify-content:flex-start;
+  }
+}
+
+/* ====================== */
+/* AJUSTE EXATO DO CARD   */
+/* IGUAL AO MODELO ENVIADO */
+/* ====================== */
+
+.card {
+  align-items: center;
+  padding: 14px;
+}
+
+/* imagem do prato */
+.card .img {
+  width: 110px;
+  height: 110px;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* Título e descrição */
+.card .content h4 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.card .content .desc {
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+/* CONTROLES EXATAMENTE COMO NA IMAGEM */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* select estilo iFood */
+.sizeSelect {
+  height: 42px;
+  font-size: 14px;
+  border-radius: 12px;
+  border: 1px solid #dcdcdc;
+  padding: 0 10px;
+}
+
+/* quantidade pequena e arredondada */
+.qtyInput {
+  width: 48px;
+  height: 42px;
+  text-align: center;
+  font-size: 15px;
+  border-radius: 12px;
+  border: 1px solid #dcdcdc;
+}
+
+/* BOTÃO ADICIONAR — EXATAMENTE IGUAL AO DA IMAGEM */
+.btn-gourmet {
+  height: 42px;
+  padding: 0 18px;
+  font-size: 15px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ícone alinhado igual ao da imagem */
+.btn-gourmet .icon {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+}
+/* ============================
+   AJUSTES MÓVEL — CARD IDÊNTICO
+   Cole este bloco ao final de styles.css
+   ============================ */
+
+/* Base mobile-friendly para todos os smartphones */
+@media (max-width: 780px) {
+  /* força layout horizontal compacto */
+  .card {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .card .img{
+    width: 78px;
+    height: 78px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    background: linear-gradient(180deg,#fff,#fbfffb);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+  }
+  .card .img img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    border-radius:12px;
+    display:block;
+  }
+
+  .card .content{
+    padding: 0;
+    min-width: 0; /* para o select flex reduzir corretamente */
+  }
+
+  .card h4{
+    font-size:16px;
+    line-height:1.2;
+    margin-bottom:4px;
+  }
+  .card p.desc{
+    font-size:12.5px;
+    color:var(--muted);
+    margin-bottom:8px;
+  }
+
+  /* controles: select flexível, qty e botão fixos */
+  .controls{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width:100%;
+  }
+
+  .sizeSelect{
+    -webkit-appearance: none;
+    appearance: none;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.09);
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 10px;
+    font-weight:700;
+    font-size:14px;
+    flex: 1;               /* ocupa espaço restante */
+    min-width: 0;          /* importante para flex overflow */
+    display:block;
+  }
+
+  /* adiciona seta personalizada visual (não quebra funcionalidade) */
+  .sizeSelect {
+    background-image: linear-gradient(45deg, transparent 50%, #777 50%), linear-gradient(135deg, #777 50%, transparent 50%);
+    background-position: calc(100% - 16px) calc(50% - 6px), calc(100% - 10px) calc(50% - 6px);
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+  }
+
+  .qtyInput{
+    width:44px;
+    height:40px;
+    border-radius:10px;
+    border:1px solid rgba(0,0,0,0.09);
+    text-align:center;
+    font-weight:700;
+    font-size:14px;
+    background:#fff;
+    flex:0 0 auto;
+  }
+
+  /* Botão verde pill como no print */
+  .btn-gourmet{
+    flex:0 0 auto;
+    height:40px;
+    padding: 0 16px;
+    border-radius: 28px;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background: linear-gradient(180deg,var(--accent),var(--accent-dark));
+    box-shadow: 0 8px 22px rgba(31,95,59,0.26);
+    border: 0;
+    color:#fff;
+    font-weight:800;
+  }
+
+  .btn-gourmet .icon{
+    width:16px;
+    height:16px;
+    fill:#fff;
+    margin-top:1px;
+  }
+
+  /* remove excesso de margem nos títulos para caber na tela */
+  .catalog, .cards { padding-right: 0; }
+
+  /* para o conteúdo ao lado da imagem ocupar corretamente */
+  .card .content { display:flex; flex-direction:column; gap:6px; width:100%; }
+
+  /* Se houver linha de preço adicional, mantém responsivo */
+  .card .content .desc + .controls { margin-top: 2px; }
+
+  /* itens do carrinho — compactar visual em mobile */
+  .cart{
+    position: relative;
+    top: 0;
+    padding: 12px;
+  }
+  .cart-item{
+    padding:10px;
+    gap:10px;
+  }
+}
+
+/* pequenas telas extra (iPhone SE / 320-360px) */
+@media (max-width: 420px) {
+  .card .img { width:70px; height:70px; }
+  .sizeSelect { height:38px; font-size:13.5px; }
+  .qtyInput { width:42px; height:38px; font-size:13px; }
+  .btn-gourmet { height:38px; padding: 0 12px; font-size:13px; border-radius:26px; }
+  .card h4 { font-size:15px; }
+  .card p.desc { font-size:12px; }
+}
+
+/* se quiser que select não "empurre" botão quando o texto for longo: truncar option exibido (visual) */
+.sizeSelect option {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* pequena melhoria: botão + sombra mais próximo ao print (bordas suavizadas) */
+.btn-gourmet:active { transform: translateY(1px); box-shadow: 0 6px 16px rgba(31,95,59,0.22); }
