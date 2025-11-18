@@ -22,7 +22,8 @@
       </div>
 
       <div class="header-right">
-        <div class="promo-pill">📢 PROMOÇÃO ESPECIAL!<br>
+        <div class="promo-pill">
+          📢 PROMOÇÃO ESPECIAL!<br>
 Na compra de 1 refeição de 750ml<br>
 Ganhe 1 GUARACAMP grátis!</div>
       </div>
@@ -59,39 +60,53 @@ Ganhe 1 GUARACAMP grátis!</div>
 
           <div id="cartItems" class="cart-items"></div>
 
+<div class="cart-userinfo">
+  <label style="display:flex;align-items:center;gap:8px;font-weight:600;">
+    <input type="checkbox" id="pickupCheck" style="transform:scale(1.2);">
+    Retirar no local
+  </label>
+
+  <h4 style="margin-bottom:8px;">Dados para Entrega</h4>
+
+  <input id="userName" type="text" class="userinfo-input" placeholder="Nome completo">
+  <input id="userAddress" type="text" class="userinfo-input" placeholder="Endereço completo">
+  
+  <select id="userPayment" class="userinfo-input">
+    <option value="">Forma de pagamento</option>
+    <option value="Dinheiro">Dinheiro</option>
+    <option value="Cartão">Cartão</option>
+    <option value="Pix">Pix</option>
+  </select>
+
+  <input id="userChange" type="text" class="userinfo-input" placeholder="Se dinheiro, troco para quanto?">
+
+  <input id="userTime" type="text" class="userinfo-input" placeholder="Horário previsto para entrega">
+</div>
+
+
+
+
           <div class="cart-summary">
             <div class="row"><span>Subtotal</span><strong id="subtotal">R$ 0,00</strong></div>
             <div class="row"><span>Entrega</span><strong id="delivery">R$ 0,00</strong></div>
             <div class="row total"><span>Total</span><strong id="grandTotal">R$ 0,00</strong></div>
           </div>
 
-          <div class="cart-actions">
+          <center><div class="cart-actions">
             <button id="clearCart" class="btn btn-outline">Limpar</button>
-            <button id="sendWhats" class="btn btn-gourmet">
-              <!-- plus icon (SVG) + text -->
-              <svg class="icon" viewBox="0 0 24 24"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></svg>
-              Adicionar e Enviar
-            </button>
-          </div>
+            <button id="sendWhats" class="btn btn-gourmet"> Finalizar Pedido </button>
+          </div></center>
         </aside>
       </section>
 
       <footer class="footer">
-        <p>Funcionamos de 2º a 6º feira — 09:00 às 14:30 • Aceitamos cartão e ticket</p>
+        <p>Funcionamos de 2º a 6º feira — 09:00 às 14:30 <br>
+          • Aceitamos cartão e ticket<br><br>
+        © 2025 - Desenvolvido por LyneSoft</p>
       </footer>
     </main>
 
-    <!-- Promo Modal -->
-    <div id="promoModal" class="modal hidden">
-      <div class="modal-card">
-        <button id="closePromo" class="modal-close" aria-label="Fechar">&times;</button>
-        <h4>Promoção Especial</h4>
-        <p>Na compra de 1 refeição de 750ml ganhe 1 GUARACAMP grátis! (Pedidos até 12h; válido enquanto durarem os estoques; pagamento à vista).</p>
-        <div class="modal-actions">
-          <button id="modalOk" class="btn btn-gourmet">Entendi</button>
-        </div>
-      </div>
-    </div>
+ 
 
     <!-- Toast -->
     <div id="toast" class="toast hidden"></div>

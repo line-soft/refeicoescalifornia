@@ -185,30 +185,62 @@ function renderCart(){
 // WhatsApp message
 function sendWhats(){
   if(cart.length === 0){ alert("Seu carrinho está vazio."); return; }
+
+  const pickup = $("#pickupCheck") ? $("#pickupCheck").checked : false;
+  const name = $("#userName") ? $("#userName").value.trim() : "";
+  const address = $("#userAddress") ? $("#userAddress").value.trim() : "";
+  const payment = $("#userPayment") ? $("#userPayment").value.trim() : "";
+  const change = $("#userChange") ? $("#userChange").value.trim() : "";
+  const time = $("#userTime") ? $("#userTime").value.trim() : "";
+
+  // validações: nome sempre obrigatório; se não for retirada, endereço e forma de pagamento obrigatórios
+  if(!name){
+    alert("Por favor informe seu nome.");
+    return;
+  }
+  if(!pickup && (!address || !payment)){
+    alert("Por favor preencha Endereço e Forma de pagamento (ou marque Retirar no local).");
+    return;
+  }
+  if(!pickup && payment === "Dinheiro" && change === ""){
+    // opcional: permitir vazio, mas aqui alertamos para trocar se desejar
+    // vou deixar não obrigatório — removi este bloqueio para não incomodar o usuário
+  }
+
   const lines = [];
   lines.push("Olá! Gostaria de fazer o pedido:");
   lines.push("");
+
   cart.forEach(it => {
     const s = it.size ? ` (${it.size})` : "";
     lines.push(`- ${it.qty} x ${it.name}${s} = ${fmt(it.unitPrice * it.qty)}`);
   });
-  // promoção
+
   if(cart.some(i=>i.promo && i.qty>0)){
     lines.push("");
-    lines.push("Observação: Elegível para promoção GUARACAMP grátis (750ml).");
+    lines.push("Elegível à promoção GUARACAMP grátis.");
   }
+
   lines.push("");
   lines.push("Total: " + $("#grandTotal").textContent);
   lines.push("");
-  lines.push("Nome: ");
-  lines.push("Endereço: ");
-  lines.push("Pagamento: (à vista / cartão / ticket)");
+  lines.push("— Dados do Cliente —");
+  lines.push(`Nome: ${name}`);
+
+  if(pickup){
+    lines.push("Retirada no local: SIM");
+  } else {
+    lines.push(`Endereço: ${address}`);
+    if(time) lines.push(`Horário previsto: ${time}`);
+  }
+
+  if(payment) lines.push(`Pagamento: ${payment}`);
+  if(!pickup && payment === "Dinheiro" && change) lines.push(`Troco para: ${change}`);
 
   const text = encodeURIComponent(lines.join("\n"));
   const url = `https://wa.me/${WHATS_PHONE}?text=${text}`;
   window.open(url, "_blank");
 }
-
 // Clear cart
 function clearCart(){
   if(!confirm("Deseja limpar todo o pedido?")) return;
@@ -219,9 +251,10 @@ function clearCart(){
 // Modal promo
 function setupModal(){
   const modal = $("#promoModal");
-  $("#openPromo").addEventListener("click", ()=> modal.classList.remove("hidden"));
-  $("#closePromo").addEventListener("click", ()=> modal.classList.add("hidden"));
-  $("#modalOk").addEventListener("click", ()=> modal.classList.add("hidden"));
+  // proteções: só adiciona listeners se os elementos existirem
+  if($("#openPromo")) $("#openPromo").addEventListener("click", ()=> modal.classList.remove("hidden"));
+  if($("#closePromo")) $("#closePromo").addEventListener("click", ()=> modal.classList.add("hidden"));
+  if($("#modalOk")) $("#modalOk").addEventListener("click", ()=> modal.classList.add("hidden"));
 }
 
 // Init
@@ -229,9 +262,44 @@ function init(){
   renderMenu();
   renderCart();
   setupModal();
+  setupPickupToggle();
 
   $("#sendWhats").addEventListener("click", sendWhats);
   $("#clearCart").addEventListener("click", clearCart);
 }
+
+// ---- Corrigida: apenas desabilita os campos de entrega (não apaga valores) ----
+function setupPickupToggle(){
+  const pickup = document.getElementById("pickupCheck");
+  if (!pickup) return;
+
+  const userAddress = document.getElementById("userAddress");
+  const userChange  = document.getElementById("userChange");
+  const userTime    = document.getElementById("userTime");
+
+  function aplicarEstado() {
+    const retirar = pickup.checked;
+
+    // Ao retirar no local:
+    // ❌ Desabilita endereço
+    userAddress.disabled = retirar;
+    userAddress.style.opacity = retirar ? "0.6" : "1";
+
+    // ✔ Troco continua habilitado
+    userChange.disabled = false;
+    userChange.style.opacity = "1";
+
+    // ✔ Horário previsto continua habilitado
+    userTime.disabled = false;
+    userTime.style.opacity = "1";
+  }
+
+  aplicarEstado();
+  pickup.addEventListener("change", aplicarEstado);
+}
+
+
+
+
 
 window.addEventListener("DOMContentLoaded", init);

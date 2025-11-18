@@ -596,3 +596,66 @@ body{
 
 /* pequena melhoria: botão + sombra mais próximo ao print (bordas suavizadas) */
 .btn-gourmet:active { transform: translateY(1px); box-shadow: 0 6px 16px rgba(31,95,59,0.22); }
+.cart-userinfo{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  background:#f9fff9;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,0.06);
+  margin-top:8px;
+}
+
+.userinfo-input{
+  padding:10px;
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,0.1);
+  background:#fff;
+  font-size:14px;
+  font-weight:600;
+}
+/* Linha pontilhada entre label (à esquerda) e valor (à direita) */
+.cart-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* cada linha é um flex container */
+.cart-summary .row{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+  font-size: 15px;
+}
+
+/* label (ex.: "Subtotal") - primeira coluna */
+.cart-summary .row span{
+  order: 0;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* valor (ex.: "R$ 0,00") - última coluna */
+.cart-summary .row strong{
+  order: 2;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+/* o pseudo-elemento funciona como o "preenchimento" entre label e valor */
+.cart-summary .row::after{
+  content: "";
+  order: 1;            /* fica ENTRE span (order 0) e strong (order 2) */
+  flex: 1 1 auto;      /* ocupa o espaço restante */
+  border-bottom: 2px dotted rgba(0,0,0,0.25);
+  height: 0;
+  align-self: center;
+  margin: 0 6px;       /* espaço pequeno antes e depois dos pontos */
+}
+
+/* destaque para a linha "total" */
+.cart-summary .total span{ font-weight:700; }
+.cart-summary .total strong{ font-weight:800; font-size:16px; }
