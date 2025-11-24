@@ -46,81 +46,214 @@ function renderMenu(){
   const dishesEl = $("#dishes");
   dishesEl.innerHTML = "";
   dishes.forEach(d => {
-    const card = document.createElement("div"); card.className = "card";
-    const imgWrap = document.createElement("div"); imgWrap.className = "img";
-    const imgEl = document.createElement("img"); imgEl.alt = d.name;
-    imgEl.src = d.img; // PNG path; if missing, shows broken — you will replace PNGs
-    imgWrap.appendChild(imgEl);
+// === CARD EXATO IGUAL À IMAGEM ===
+const card = document.createElement("div");
+card.className = "card";
 
-    const content = document.createElement("div"); content.className = "content";
-    const title = document.createElement("h4"); title.textContent = d.name;
-    const desc = document.createElement("p"); desc.className = "desc"; desc.textContent = d.desc;
+// IMAGEM
+const imgWrap = document.createElement("div");
+imgWrap.className = "img";
+const imgEl = document.createElement("img");
+imgEl.alt = d.name;
+imgEl.src = d.img;
+imgWrap.appendChild(imgEl);
 
-    // controls
-    const controls = document.createElement("div"); controls.className = "controls";
-    const select = document.createElement("select"); select.className = "sizeSelect";
-    d.sizes.forEach((s, idx) => {
-      const op = document.createElement("option");
-      op.value = idx;
-      op.textContent = `${s.label} — ${fmt(s.price)}`;
-      select.appendChild(op);
+// CONTEÚDO
+const content = document.createElement("div");
+content.className = "content";
+
+// TÍTULO
+const title = document.createElement("h4");
+title.textContent = d.name;
+
+// DESCRIÇÃO
+const desc = document.createElement("p");
+desc.className = "desc";
+desc.textContent = d.desc;
+
+// CONTROLES (IGUAL A IMAGEM)
+const controls = document.createElement("div");
+controls.className = "controls controls-premium";
+
+// 🔘 CHECKBOX TAMANHOS
+const sizeBox = document.createElement("div");
+sizeBox.className = "size-box";
+
+d.sizes.forEach((s, idx) => {
+  const opt = document.createElement("label");
+  opt.className = "size-option";
+
+  const radio = document.createElement("input");
+  radio.type = "checkbox";
+  radio.name = `size-${d.id}`;
+  radio.dataset.index = idx;
+
+  const text = document.createElement("span");
+  text.textContent = `${s.label} — ${fmt(s.price)}`;
+
+  opt.appendChild(radio);
+  opt.appendChild(text);
+  sizeBox.appendChild(opt);
+
+  // Só 1 pode ser selecionado
+  radio.addEventListener("change", () => {
+    [...sizeBox.querySelectorAll("input")].forEach(r => {
+      if (r !== radio) r.checked = false;
     });
+  });
+});
 
-    const qty = document.createElement("input"); qty.type = "number"; qty.min = "1"; qty.value = "1"; qty.className = "qtyInput";
-    const addBtn = document.createElement("button"); addBtn.className = "btn-gourmet"; addBtn.innerHTML = `<svg class="icon" viewBox="0 0 24 24"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></svg>Adicionar`;
+// QUANTIDADE
+const qtyBox = document.createElement("div");
+qtyBox.className = "qty-box";
 
-    controls.appendChild(select); controls.appendChild(qty); controls.appendChild(addBtn);
+const minus = document.createElement("button");
+minus.className = "qty-btn minus";
+minus.textContent = "-";
 
-    content.appendChild(title); content.appendChild(desc); content.appendChild(controls);
+const qtyTxt = document.createElement("span");
+qtyTxt.className = "qty-number";
+qtyTxt.textContent = "1";
 
-    card.appendChild(imgWrap); card.appendChild(content);
-    dishesEl.appendChild(card);
+const plus = document.createElement("button");
+plus.className = "qty-btn plus";
+plus.textContent = "+";
 
-    addBtn.addEventListener("click", () => {
-      const sizeIdx = +select.value;
-      const size = d.sizes[sizeIdx];
-      const q = Math.max(1, parseInt(qty.value) || 1);
-      addToCart({
-        key: `dish-${d.id}-${size.label}`,
-        type: "dish", id: d.id, name: d.name, size: size.label,
-        qty: q, unitPrice: size.price, promo: !!size.promo
-      });
-      showToast("Item adicionado ao pedido");
-    });
+qtyBox.appendChild(minus);
+qtyBox.appendChild(qtyTxt);
+qtyBox.appendChild(plus);
+
+// BOTÃO ADICIONAR
+const addBtn = document.createElement("button");
+addBtn.className = "btn-add-premium";
+addBtn.innerHTML = `
+  <svg class="icon" viewBox="0 0 24 24">
+    <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/>
+  </svg>
+  Adicionar
+`;
+
+controls.appendChild(sizeBox);
+controls.appendChild(qtyBox);
+controls.appendChild(addBtn);
+
+content.appendChild(title);
+content.appendChild(desc);
+content.appendChild(controls);
+
+card.appendChild(imgWrap);
+card.appendChild(content);
+dishesEl.appendChild(card);
+
+// EVENTOS (FUNCIONANDO)
+minus.addEventListener("click", () => {
+  qtyTxt.textContent = Math.max(1, +qtyTxt.textContent - 1);
+});
+
+plus.addEventListener("click", () => {
+  qtyTxt.textContent = +qtyTxt.textContent + 1;
+});
+
+addBtn.addEventListener("click", () => {
+  const chosen = [...sizeBox.querySelectorAll("input")].find(c => c.checked);
+  if (!chosen) return showToast("Selecione um tamanho");
+
+  const size = d.sizes[chosen.dataset.index];
+  const qty = +qtyTxt.textContent;
+
+  addToCart({
+    key: `dish-${d.id}-${size.label}`,
+    type: "dish",
+    id: d.id,
+    name: d.name,
+    size: size.label,
+    qty,
+    unitPrice: size.price,
+    promo: !!size.promo
+  });
+
+  showToast("Item adicionado ao pedido");
+});
+
   });
 
   // Render drinks
-  const drinksEl = $("#drinks");
-  drinksEl.innerHTML = "";
-  drinks.forEach(dr => {
-    const card = document.createElement("div"); card.className = "card";
-    const imgWrap = document.createElement("div"); imgWrap.className = "img";
-    const imgEl = document.createElement("img"); imgEl.alt = dr.name; imgEl.src = dr.img;
-    imgWrap.appendChild(imgEl);
+const drinksEl = $("#drinks");
+drinksEl.innerHTML = "";
+drinks.forEach(dr => {
+  const card = document.createElement("div"); 
+  card.className = "card";
 
-    const content = document.createElement("div"); content.className = "content";
-    const title = document.createElement("h4"); title.textContent = dr.name;
-    const desc = document.createElement("p"); desc.className = "desc"; desc.textContent = fmt(dr.price);
+  const imgWrap = document.createElement("div"); 
+  imgWrap.className = "img";
 
-    const controls = document.createElement("div"); controls.className = "controls";
-    const qty = document.createElement("input"); qty.type="number"; qty.min="1"; qty.value="1"; qty.className="qtyInput";
-    const addBtn = document.createElement("button"); addBtn.className="btn-gourmet"; addBtn.innerHTML = `<svg class="icon" viewBox="0 0 24 24"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/></svg>Adicionar`;
-    controls.appendChild(qty); controls.appendChild(addBtn);
+  const imgEl = document.createElement("img"); 
+  imgEl.alt = dr.name; 
+  imgEl.src = dr.img;
 
-    content.appendChild(title); content.appendChild(desc); content.appendChild(controls);
-    card.appendChild(imgWrap); card.appendChild(content);
-    drinksEl.appendChild(card);
+  imgWrap.appendChild(imgEl);
 
-    addBtn.addEventListener("click", () => {
-      const q = Math.max(1, parseInt(qty.value) || 1);
-      addToCart({
-        key: `drink-${dr.id}`,
-        type: "drink", id: dr.id, name: dr.name, size: null,
-        qty: q, unitPrice: dr.price, promo:false
-      });
-      showToast("Bebida adicionada ao pedido");
+  const content = document.createElement("div"); 
+  content.className = "content";
+
+  const title = document.createElement("h4"); 
+  title.textContent = dr.name;
+
+  const desc = document.createElement("p"); 
+  desc.className = "desc"; 
+  desc.textContent = fmt(dr.price);
+
+  const controls = document.createElement("div");
+controls.className = "controls";
+
+// ocupa o espaço do select do prato
+const fakeSelect = document.createElement("select");
+fakeSelect.style.opacity = "0";
+fakeSelect.style.pointerEvents = "none";
+fakeSelect.style.height = "40px";
+controls.appendChild(fakeSelect);
+
+const qty = document.createElement("input");
+qty.type = "number";
+qty.min = "1";
+qty.value = "1";
+qty.className = "qtyInput";
+
+const addBtn = document.createElement("button");
+addBtn.className = "btn-gourmet";
+addBtn.innerHTML = `
+<svg class="icon" viewBox="0 0 24 24">
+  <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/>
+</svg>Adicionar
+`;
+
+controls.appendChild(qty);
+controls.appendChild(addBtn);
+
+  content.appendChild(title); 
+  content.appendChild(desc); 
+  content.appendChild(controls);
+
+  card.appendChild(imgWrap); 
+  card.appendChild(content);
+
+  drinksEl.appendChild(card);
+
+  addBtn.addEventListener("click", () => {
+    const q = Math.max(1, parseInt(qty.value) || 1);
+    addToCart({
+      key: `drink-${dr.id}`,
+      type: "drink",
+      id: dr.id,
+      name: dr.name,
+      size: null,
+      qty: q,
+      unitPrice: dr.price,
+      promo: false
     });
+    showToast("Bebida adicionada ao pedido");
   });
+});
 }
 
 // Cart logic
@@ -268,6 +401,11 @@ function init(){
   $("#clearCart").addEventListener("click", clearCart);
 }
 
+
+
+
+
+
 // ---- Corrigida: apenas desabilita os campos de entrega (não apaga valores) ----
 function setupPickupToggle(){
   const pickup = document.getElementById("pickupCheck");
@@ -303,3 +441,8 @@ function setupPickupToggle(){
 
 
 window.addEventListener("DOMContentLoaded", init);
+
+
+
+
+
