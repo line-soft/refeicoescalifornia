@@ -3,7 +3,7 @@
    WhatsApp: abre conversa com o número +55 21 97579-9735 (formato wa.me).
 */
 
-const WHATS_PHONE = "5521965781487";
+const WHATS_PHONE = "5521990674897";
 
 // Dados — edite preços/textos aqui
 const dishes = [
@@ -177,70 +177,107 @@ addBtn.addEventListener("click", () => {
 
   });
 
-  // Render drinks
+ // Render drinks
 const drinksEl = $("#drinks");
 drinksEl.innerHTML = "";
 drinks.forEach(dr => {
-  const card = document.createElement("div"); 
+
+  const card = document.createElement("div");
   card.className = "card";
 
-  const imgWrap = document.createElement("div"); 
+  const imgWrap = document.createElement("div");
   imgWrap.className = "img";
 
-  const imgEl = document.createElement("img"); 
-  imgEl.alt = dr.name; 
+  const imgEl = document.createElement("img");
+  imgEl.alt = dr.name;
   imgEl.src = dr.img;
-
   imgWrap.appendChild(imgEl);
 
-  const content = document.createElement("div"); 
+  const content = document.createElement("div");
   content.className = "content";
 
-  const title = document.createElement("h4"); 
+  const title = document.createElement("h4");
   title.textContent = dr.name;
 
-  const desc = document.createElement("p"); 
-  desc.className = "desc"; 
+  const desc = document.createElement("p");
+  desc.className = "desc";
   desc.textContent = fmt(dr.price);
 
-  const controls = document.createElement("div");
-controls.className = "controls";
 
-// ocupa o espaço do select do prato
-const fakeSelect = document.createElement("select");
-fakeSelect.style.opacity = "0";
-fakeSelect.style.pointerEvents = "none";
-fakeSelect.style.height = "40px";
-controls.appendChild(fakeSelect);
+  // ======================================================
+  // QUANTIDADE - + (ESQUERDA) E BOTÃO ADICIONAR (DIREITA)
+  // ======================================================
+  const actionRow = document.createElement("div");
+  actionRow.style.display = "flex";
+  actionRow.style.alignItems = "center";
+  actionRow.style.justifyContent = "space-between";
+  actionRow.style.marginTop = "10px";
 
-const qty = document.createElement("input");
-qty.type = "number";
-qty.min = "1";
-qty.value = "1";
-qty.className = "qtyInput";
+  // --- Caixa de quantidade
+  const qtyBox = document.createElement("div");
+  qtyBox.className = "qty-box";
+  qtyBox.style.display = "flex";
+  qtyBox.style.alignItems = "center";
+  qtyBox.style.gap = "8px";
 
-const addBtn = document.createElement("button");
-addBtn.className = "btn-gourmet";
-addBtn.innerHTML = `
-<svg class="icon" viewBox="0 0 24 24">
-  <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/>
-</svg>Adicionar
-`;
+  const minus = document.createElement("button");
+  minus.className = "qty-btn minus";
+  minus.textContent = "-";
 
-controls.appendChild(qty);
-controls.appendChild(addBtn);
+  const qtyTxt = document.createElement("span");
+  qtyTxt.className = "qty-number";
+  qtyTxt.textContent = "1";
 
-  content.appendChild(title); 
-  content.appendChild(desc); 
-  content.appendChild(controls);
+  const plus = document.createElement("button");
+  plus.className = "qty-btn plus";
+  plus.textContent = "+";
 
-  card.appendChild(imgWrap); 
+  qtyBox.appendChild(minus);
+  qtyBox.appendChild(qtyTxt);
+  qtyBox.appendChild(plus);
+
+
+  // --- Botão ADICIONAR (igual ao original, sem mexer no estilo)
+  const addBtn = document.createElement("button");
+  addBtn.className = "btn-gourmet";
+  addBtn.innerHTML = `
+    <svg class="icon" viewBox="0 0 24 24">
+      <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/>
+    </svg>Adicionar
+  `;
+
+  // Monta a linha com quantidade à esquerda e botão à direita
+  actionRow.appendChild(qtyBox);
+  actionRow.appendChild(addBtn);
+
+
+  // ======================================================
+  // MONTA O CARD
+  // ======================================================
+  content.appendChild(title);
+  content.appendChild(desc);
+  content.appendChild(actionRow);
+
+  card.appendChild(imgWrap);
   card.appendChild(content);
 
   drinksEl.appendChild(card);
 
+
+  // ======================================================
+  // EVENTOS
+  // ======================================================
+  minus.addEventListener("click", () => {
+    qtyTxt.textContent = Math.max(1, +qtyTxt.textContent - 1);
+  });
+
+  plus.addEventListener("click", () => {
+    qtyTxt.textContent = +qtyTxt.textContent + 1;
+  });
+
   addBtn.addEventListener("click", () => {
-    const q = Math.max(1, parseInt(qty.value) || 1);
+    const q = +qtyTxt.textContent;
+
     addToCart({
       key: `drink-${dr.id}`,
       type: "drink",
@@ -251,9 +288,12 @@ controls.appendChild(addBtn);
       unitPrice: dr.price,
       promo: false
     });
+
     showToast("Bebida adicionada ao pedido");
   });
+
 });
+
 }
 
 // Cart logic
