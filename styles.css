@@ -1494,3 +1494,26 @@ body{
 .remove-btn:active {
   transform: scale(0.97);
 }
+
+
+
+/* Diminuir tamanho do texto dos itens do carrinho */
+.cart-item .left strong {
+    font-size: 14px !important;   /* nome do item */
+}
+
+.cart-item .left .small {
+    font-size: 11px !important;   /* tamanho/sabor (PRATO PEQUENO, 750ml etc) */
+}
+
+.cart-item > div:last-child {
+    font-size: 15px !important;   /* preço */
+}
+
+.controls-qty .qty-btn {
+    font-size: 14px !important;   /* + e - */
+}
+
+.controls-qty div {
+    font-size: 15px !important;   /* quantidade atual */
+}
