@@ -1443,4 +1443,24 @@ body{
 
 
 
+/* Correção para mobile – impede o botão de sair para fora do card */
+@media (max-width: 480px) {
+  /* Linha das bebidas: quantidade + botão */
+  #drinks .card .content > div {
+    flex-wrap: wrap !important;
+    gap: 10px;
+  }
 
+  /* Ajusta o botão "Adicionar" para não estourar o card */
+  .btn-gourmet {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    padding: 12px 0;
+  }
+
+  /* Quantidade alinhada corretamente */
+  .qty-box {
+    flex: 1;
+  }
+}
