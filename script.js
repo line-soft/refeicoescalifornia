@@ -12,7 +12,7 @@ const dishes = [
   { id:3, name:"Contra Filé Acebolado", desc:"Arroz, Feijão, Farofa, Macarrão", sizes:[{label:"Único", price:25.00}], img:"cf_ac.jpg" },
   { id:4, name:"Filé de Frango à Parmegiana", desc:"Arroz, Feijão, Farofa, Macarrão", sizes:[{label:"Grande 750ml", price:21.00, promo:true},{label:"Pequena", price:19.00}], img:"fil_f_parm.jpg" },
   { id:5, name:"Filé de Frango à Milanesa", desc:"Arroz, Feijão, Farofa, Macarrão", sizes:[{label:"Grande 750ml", price:18.00, promo:true},{label:"Pequena", price:16.00}], img:"fg_mil.jpg" },
-  { id:6, name:"Filé de Frango Grelhado/Acebolado", desc:"Arroz, Feijão, Farofa, Macarrão", sizes:[{label:"Grande 750ml", price:18.00, promo:true},{label:"Pequena", price:16.00}], img:"fgo_grel.jpg" }
+  { id:6, name:"Filé de Frango Grelhado", desc:"Arroz, Feijão, Farofa, Macarrão", sizes:[{label:"Grande 750ml", price:18.00, promo:true},{label:"Pequena", price:16.00}], img:"fgo_grel.jpg" }
 ];
 
 const drinks = [

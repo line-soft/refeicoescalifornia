@@ -1443,24 +1443,54 @@ body{
 
 
 
-/* Correção para mobile – impede o botão de sair para fora do card */
-@media (max-width: 480px) {
-  /* Linha das bebidas: quantidade + botão */
+
+/* ======== CORREÇÃO DO CARD DE BEBIDAS NO MOBILE ======== */
+@media (max-width: 600px) {
+
+  /* Linha que contém quantidade + botão */
   #drinks .card .content > div {
+    display: flex !important;
     flex-wrap: wrap !important;
-    gap: 10px;
+    gap: 10px !important;
   }
 
-  /* Ajusta o botão "Adicionar" para não estourar o card */
-  .btn-gourmet {
-    width: 100%;
+  /* Caixa de quantidade – ocupa metade da linha */
+  #drinks .qty-box {
+    flex: 1 1 120px !important;
     justify-content: center;
-    text-align: center;
-    padding: 12px 0;
   }
 
-  /* Quantidade alinhada corretamente */
-  .qty-box {
-    flex: 1;
+  /* Botão Adicionar – quebra linha e fica 100% da largura */
+  #drinks .btn-gourmet {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    padding: 12px 0 !important;
   }
+}
+
+
+
+
+.remove-btn {
+  background: #ff4d4d;
+  border: none;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 6px 20px rgba(255, 80, 80, 0.25);
+  transition: 0.2s ease;
+}
+
+.remove-btn:hover {
+  background: #e63a3a;
+  transform: translateY(-2px);
+}
+
+.remove-btn:active {
+  transform: scale(0.97);
 }
